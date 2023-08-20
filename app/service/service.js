@@ -1,10 +1,12 @@
 const BASE_URL = "https://64ddb297825d19d9bfb164a3.mockapi.io/food";
+
 let getList = () => {
   return axios({
     url: BASE_URL,
     method: "GET",
   });
 };
+
 let deleteFood = (id) => {
   return axios({
     url: `${BASE_URL}/${id}`,
@@ -18,9 +20,18 @@ let addFood = (food) => {
     data: food,
   });
 };
+
+let getDetail = (id) => {
+  return axios({
+    url: `${BASE_URL}/${id}`,
+    method: "GET",
+  });
+};
+
 let foodServ = {
   getList,
   deleteFood,
   addFood,
+  getDetail,
 };
 export default foodServ;

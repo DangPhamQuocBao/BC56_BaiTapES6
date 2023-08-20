@@ -1,53 +1,50 @@
-import { onSuccess, renderFoodList } from "./controller-v2.js";
+import { onSuccess, renderFoodList, showDataForm } from "./controllers-v2.js";
 import foodServ from "../../service/service.js";
-import { layThongTin } from "../v1/controler-v1.js";
+import {layThongTin} from "../v1/controllers-v1.js";
 
-// render food list
-
+// render DS món ăn
 let fetchFoodList = () => {
-  foodServ
-    .getList()
-    .then((res) => {
-      console.log(res);
-      renderFoodList(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+foodServ.getList().then((res) => {
+  console.log(res);
+  renderFoodList(res.data);
+}).catch((err) =>
+{
+    console.log(err);
+});
 };
 fetchFoodList();
 
-let deleteFood = (id) => {
-  foodServ
-    .deleteFood(id)
-    .then((res) => {
-      onSuccess("Xóa thành công");
-      fetchFoodList();
-    })
-    .catch((err) => {
-      console.log(err);
+//tách service
+
+
+let deleteFood=(id) => { 
+    foodServ.deleteFood(id).then((res) =>{
+        console.log(res);
+        onSuccess("Xóa thành công! ")
+        fetchFoodList();
+    }).catch((err)=>{
+        console.log(err);
     });
-};
+ };
+ window.deleteFood = deleteFood;
 
-window.deleteFood = deleteFood;
-
-window.addFood = () => {
-  console.log("first");
-  let data = layThongTin();
-  foodServ
-    .addFood(data)
-    .then((res) => {
-      $("#myModal").modal("hide");
-      onSuccess("Thêm thành công");
-
-      console.log(res);
-      fetchFoodList();
-    })
-    .catch((err) => {
-      console.log(err);
+ window.addFood = () => {
+    let data = layThongTin();
+    foodServ.addFood(data).then((res) =>{
+        $("#exampleModal").modal("hide");
+        onSuccess("Thêm thành công!")
+        fetchFoodList();
+    }).catch((err) =>{
+        console.log(err);
     });
-};
+ };
 
 window.editFood = () => {
-  $("#myModal").modal("show");
+    $("#exampleModal").modal("show");
+    foodServ.getDetail(id).then((res) =>{
+            console.log(res);
+            showDataForm(res.data);
+        }).catch((err)=>{
+            console.log(err);
+        });
 };

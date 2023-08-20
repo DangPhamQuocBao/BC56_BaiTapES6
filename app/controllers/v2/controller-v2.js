@@ -28,7 +28,7 @@ export let renderFoodList = (list) => {
   document.getElementById("tbodyFood").innerHTML = contentHTML;
 };
 
-export let layThongTinTuForm = () => {};
+export let showThongTinLenForm = () => {};
 export let onSuccess = (message) => {
   Swal.fire(message, "", "success");
 };
